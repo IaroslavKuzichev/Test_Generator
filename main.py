@@ -142,7 +142,7 @@ try:
     comp = []
     wb_obj = openpyxl.load_workbook(path)
     sheet_obj = wb_obj.active
-    cell_obj = sheet_obj['A1':'C10']
+    cell_obj = sheet_obj['A1':'C12']
     for cell1, cell2, cell3 in cell_obj:
         tasks.append(str(cell1.value))
         answers.append(str(cell2.value))
