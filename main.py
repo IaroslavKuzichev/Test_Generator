@@ -76,7 +76,7 @@ class TestWindow(QtWidgets.QWidget):
             window.btn_result.setDisabled(False)
         else:  # inserted
             if self.count == window.num:
-                self.btnAnswer.setText('\u0417\u0430\u0432\u0435\u0440\u0448\u0438\u0442\u044c')
+                self.btnAnswer.setText('Завершить')
                 self.btnAnswer.setShortcut('Return')
                 self.count += 1
                 for i in range(1, 5):
