@@ -91,16 +91,6 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QRadioButton" name="option4">
-        <property name="text">
-         <string/>
-        </property>
-        <property name="shortcut">
-         <string>4</string>
-        </property>
-       </widget>
-      </item>
       <item row="3" column="1">
        <widget class="QPushButton" name="btnAnswer">
         <property name="sizePolicy">
@@ -117,23 +107,20 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="QRadioButton" name="option3">
+      <item row="3" column="0">
+       <widget class="QLabel" name="statLbl1">
         <property name="font">
          <font>
           <pointsize>12</pointsize>
          </font>
         </property>
         <property name="text">
-         <string/>
-        </property>
-        <property name="shortcut">
-         <string>3</string>
+         <string>Ответ: </string>
         </property>
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QRadioButton" name="option1">
+       <widget class="QCheckBox" name="option1">
         <property name="font">
          <font>
           <pointsize>12</pointsize>
@@ -147,25 +134,38 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="statLbl1">
+      <item row="1" column="1">
+       <widget class="QCheckBox" name="option2">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="shortcut">
+         <string>2</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QCheckBox" name="option3">
         <property name="font">
          <font>
           <pointsize>12</pointsize>
          </font>
         </property>
         <property name="text">
-         <string>Ответ: </string>
+         <string/>
+        </property>
+        <property name="shortcut">
+         <string>3</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QRadioButton" name="option2">
+      <item row="2" column="1">
+       <widget class="QCheckBox" name="option4">
         <property name="text">
          <string/>
         </property>
         <property name="shortcut">
-         <string>2</string>
+         <string>4</string>
         </property>
        </widget>
       </item>
