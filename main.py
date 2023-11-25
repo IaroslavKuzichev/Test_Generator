@@ -24,7 +24,7 @@ class MainWindow(QtWidgets.QWidget):
         vbox.addWidget(self.btn_select)
         vbox.addWidget(self.btn_start)
         vbox.addWidget(self.btn_result)
-        self.resize(200, 200)
+        self.setFixedSize(200, 200)
         self.show()
 
     def open_modal_window(self):
@@ -76,7 +76,7 @@ class TestWindow(QtWidgets.QWidget):
             window.btn_result.setDisabled(False)
         else:  # inserted
             if self.count == window.num:
-                self.btnAnswer.setText('\u0417\u0430\u0432\u0435\u0440\u0448\u0438\u0442\u044c')
+                self.btnAnswer.setText('Завершить')
                 self.btnAnswer.setShortcut('Return')
                 self.count += 1
                 for i in range(1, 5):
@@ -91,13 +91,9 @@ class TestWindow(QtWidgets.QWidget):
                 num_task.append(n + 1)
                 for i in range(1, 5):
                     attr = getattr(self, f'option{i}')
-                    if i == 4:
-                        attr2 = getattr(self, f'option{i - 1}')
-                    else:  # inserted
-                        attr2 = getattr(self, f'option{i + 1}')
                     if attr.isChecked():
                         self.ans = attr.text()[3:]
-                        attr2.setChecked(True)
+                        attr.setChecked(False)
                         break
                 self.label.setText(f'Задание {self.count + 1}')
                 self.task.setText(tasks[n])
@@ -106,21 +102,21 @@ class TestWindow(QtWidgets.QWidget):
                 self.option3.setText(options[n][2])
                 self.option4.setText(options[n][3])
                 self.count += 1
-                num_answer.append(self.ans)
+            num_answer.append(self.ans)
 
 
 class ResultWindow(QtWidgets.QWidget):
     def __init__(self):
-        global num_task  # inserted
-        global points  # inserted
+        global num_task
+        global points
         super().__init__()
         uic.loadUi('Result_Window.ui', self)
         window.btn_result.setDisabled(True)
         for l in range(len(num_task)):
             if num_answer[l] == comp[l]:
-                points.append(1)
-            else:  # inserted
-                points.append(0)
+                points.append('1')
+            else:
+                points.append('0')
         num_task = [str(o) for o in num_task]
         self.lst = [num_task, num_answer, points]
         self.c = 0
