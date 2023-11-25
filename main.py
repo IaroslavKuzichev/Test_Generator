@@ -29,8 +29,7 @@ class MainWindow(QtWidgets.QWidget):
 
     def open_modal_window(self):
         ui1 = uic.loadUi('Task_Select.ui')
-        ui1.label2.setText(
-            f'Максимально возможное число: {len(tasks)():}')
+        ui1.label2.setText(f'Максимально возможное число: {len(tasks):}')
         ui1.btnNext.clicked.connect(lambda: self.get_num(ui1))
         ui1.btnNext.clicked.connect(lambda: self.btn_select.setDisabled(True))
         ui1.btnNext.clicked.connect(lambda: self.btn_start.setDisabled(False))
@@ -48,7 +47,7 @@ class MainWindow(QtWidgets.QWidget):
         numbers.remove(n)
         num_task.append(n + 1)
         comp.append(answers[n])
-        self.w.label.setText('\u0417\u0430\u0434\u0430\u0447\u0430 1')
+        self.w.label.setText('Задание 1')
         self.w.task.setText(tasks[n])
         self.w.option1.setText(options[n][0])
         self.w.option2.setText(options[n][1])
@@ -119,9 +118,9 @@ class ResultWindow(QtWidgets.QWidget):
         window.btn_result.setDisabled(True)
         for l in range(len(num_task)):
             if num_answer[l] == comp[l]:
-                points.append('1')
+                points.append(1)
             else:  # inserted
-                points.append('0')
+                points.append(0)
         num_task = [str(o) for o in num_task]
         self.lst = [num_task, num_answer, points]
         self.c = 0
@@ -133,12 +132,12 @@ class ResultWindow(QtWidgets.QWidget):
             self.c += 1
         points = [int(z) for z in points]
         summ = sum(points)
-        self.text.setText(f'\u0412\u0441\u0435\u0433\u043e \u0431\u0430\u043b\u043b\u043e\u0432: {summ}')
+        self.text.setText(f'Суммарный балл: {summ}')
         self.show()
 
 
 app = QtWidgets.QApplication(sys.argv)
-path = QtWidgets.QFileDialog().getOpenFileName()[0].replace('\"', '')
+path = QtWidgets.QFileDialog().getOpenFileName(filter='Таблицы Excel (*.xlsx *.xls *.csv)')[0].replace('\"', '')
 try:
     data = []
     tasks = []
