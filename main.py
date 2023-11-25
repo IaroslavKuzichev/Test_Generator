@@ -1,5 +1,3 @@
-global points  # inserted
-global num_task  # inserted
 import openpyxl
 import sys
 from PyQt5 import QtWidgets, QtCore, uic
@@ -9,18 +7,16 @@ from random import *
 class MainWindow(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('\u0413\u043b\u0430\u0432\u043d\u043e\u0435 \u043c\u0435\u043d\u044e')
+        self.setWindowTitle('Главное меню')
         vbox = QtWidgets.QVBoxLayout(self)
-        self.btn_select = QtWidgets.QPushButton(
-            '\u0412\u044b\u0431\u0440\u0430\u0442\u044c \u043a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e \u0437\u0430\u0434\u0430\u043d\u0438\u0439')
+        self.btn_select = QtWidgets.QPushButton('Выбрать количество заданий')
         self.btn_select.clicked.connect(self.open_modal_window)
         self.btn_select.setShortcut('Return')
-        self.btn_start = QtWidgets.QPushButton('\u041d\u0430\u0447\u0430\u0442\u044c \u0442\u0435\u0441\u0442')
+        self.btn_start = QtWidgets.QPushButton('Начать тест')
         self.btn_start.clicked.connect(self.open_test_window)
         self.btn_start.setShortcut('Return')
         self.btn_start.setDisabled(True)
-        self.btn_result = QtWidgets.QPushButton(
-            '\u041f\u043e\u043a\u0430\u0437\u0430\u0442\u044c \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442\u044b')
+        self.btn_result = QtWidgets.QPushButton('Показать результаты')
         self.btn_result.clicked.connect(self.open_result_window)
         self.btn_result.setShortcut('Return')
         self.btn_result.setDisabled(True)
@@ -33,8 +29,7 @@ class MainWindow(QtWidgets.QWidget):
 
     def open_modal_window(self):
         ui1 = uic.loadUi('Task_Select.ui')
-        ui1.label2.setText(
-            f'\u041c\u0430\u043a\u0441\u0438\u043c\u0430\u043b\u044c\u043d\u043e \u0432\u043e\u0437\u043c\u043e\u0436\u043d\u043e\u0435 \u0447\u0438\u0441\u043b\u043e: {len(tasks)():}')
+        ui1.label2.setText(f'Максимально возможное число: {len(tasks):}')
         ui1.btnNext.clicked.connect(lambda: self.get_num(ui1))
         ui1.btnNext.clicked.connect(lambda: self.btn_select.setDisabled(True))
         ui1.btnNext.clicked.connect(lambda: self.btn_start.setDisabled(False))
@@ -52,7 +47,7 @@ class MainWindow(QtWidgets.QWidget):
         numbers.remove(n)
         num_task.append(n + 1)
         comp.append(answers[n])
-        self.w.label.setText('\u0417\u0430\u0434\u0430\u0447\u0430 1')
+        self.w.label.setText('Задание 1')
         self.w.task.setText(tasks[n])
         self.w.option1.setText(options[n][0])
         self.w.option2.setText(options[n][1])
@@ -104,7 +99,7 @@ class TestWindow(QtWidgets.QWidget):
                         self.ans = attr.text()[3:]
                         attr2.setChecked(True)
                         break
-                self.label.setText(f'\u0417\u0430\u0434\u0430\u0447\u0430 {self.count + 1}')
+                self.label.setText(f'Задание {self.count + 1}')
                 self.task.setText(tasks[n])
                 self.option1.setText(options[n][0])
                 self.option2.setText(options[n][1])
@@ -119,13 +114,13 @@ class ResultWindow(QtWidgets.QWidget):
         global num_task  # inserted
         global points  # inserted
         super().__init__()
-        uic.loadUi('Table_Window.ui', self)
+        uic.loadUi('Result_Window.ui', self)
         window.btn_result.setDisabled(True)
         for l in range(len(num_task)):
             if num_answer[l] == comp[l]:
-                points.append('1')
+                points.append(1)
             else:  # inserted
-                points.append('0')
+                points.append(0)
         num_task = [str(o) for o in num_task]
         self.lst = [num_task, num_answer, points]
         self.c = 0
@@ -137,30 +132,33 @@ class ResultWindow(QtWidgets.QWidget):
             self.c += 1
         points = [int(z) for z in points]
         summ = sum(points)
-        self.text.setText(f'\u0412\u0441\u0435\u0433\u043e \u0431\u0430\u043b\u043b\u043e\u0432: {summ}')
+        self.text.setText(f'Суммарный балл: {summ}')
         self.show()
 
 
 app = QtWidgets.QApplication(sys.argv)
-path = QtWidgets.QFileDialog().getOpenFileName()[0].replace('\"', '')
-data = []
-tasks = []
-options = []
-answers = []
-comp = []
-wb_obj = openpyxl.load_workbook(path)
-sheet_obj = wb_obj.active
-cell_obj = sheet_obj['A1':'C10']
-for cell1, cell2, cell3 in cell_obj:
-    tasks.append(str(cell1.value))
-    answers.append(str(cell2.value))
-    options.append(str(cell3.value))
-numbers = [int(k) for k in range(0, len(tasks))]
-points = []
-num_task = []
-num_answer = []
-counter = 0
-for i in range(len(options)):
-    options[i] = options[i].split(';  ')
-window = MainWindow()
+path = QtWidgets.QFileDialog().getOpenFileName(filter='Таблицы Excel (*.xlsx *.xls *.csv)')[0].replace('\"', '')
+try:
+    data = []
+    tasks = []
+    options = []
+    answers = []
+    comp = []
+    wb_obj = openpyxl.load_workbook(path)
+    sheet_obj = wb_obj.active
+    cell_obj = sheet_obj['A1':'C10']
+    for cell1, cell2, cell3 in cell_obj:
+        tasks.append(str(cell1.value))
+        answers.append(str(cell2.value))
+        options.append(str(cell3.value))
+    numbers = [int(k) for k in range(0, len(tasks))]
+    points = []
+    num_task = []
+    num_answer = []
+    counter = 0
+    for i in range(len(options)):
+        options[i] = options[i].split(';  ')
+    window = MainWindow()
+except openpyxl.utils.exceptions.InvalidFileException:
+    exit()
 sys.exit(app.exec_())
