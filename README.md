@@ -1,2 +1,2 @@
 # Test_Generator
-A project I made for school
+A simple test generator made with Python and PyQt
